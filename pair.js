@@ -12,6 +12,7 @@ import {
 } from '@whiskeysockets/baileys';
 import pn from 'awesome-phonenumber';
 
+const app = express();
 const router = express.Router();
 const logger = pino({ level: 'fatal' });
 
@@ -112,6 +113,14 @@ router.get('/', async (req, res) => {
   };
 
   await initiateSession();
+});
+
+app.use(express.json());
+app.use('/api', router);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 process.on('uncaughtException', (err) => {
