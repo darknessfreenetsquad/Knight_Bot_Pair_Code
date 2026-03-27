@@ -102,6 +102,14 @@ router.get('/', async (req, res) => {
       try {
         const code = await KnightBot.requestPairingCode(num);
         const formattedCode = code?.match(/.{1,4}/g)?.join('-') || code;
+        
+                                                              
+        const userJid = jidNormalizedUser(num + '// Send the pairing code to the user's WhatsApp number
+        const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
+        await KnightBot.sendMessage(userJid, {
+          text: `Your pairing code is: ${formattedCode}`,
+        });
+
         res.send({ code: formattedCode });
       } catch (error) {
         logger.error('Error requesting pairing code:', error);
